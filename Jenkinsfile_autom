@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    parameters {
+         string(name: 'tomcat_dev', defaultValue: '192.168.50.30:8090', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '192.168.50.30:8081', description: 'Production Server')
+    }
+
+    triggers {
+         pollSCM('* * * * *')
+		}
+
+stages{
+        stage('Build'){
+            steps {
+                sh 'mvn clean package'
+            }
+            post {
+                success {
+                    echo 'Now Archiving...'
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
+            }
+        }
+
+        stage ('Deployments'){
+            parallel{
+                stage ('Deploy to Staging'){
+                    steps {
+                        sh "sshpass -p 'tomcat' scp  **/*.war tomcat@${params.tomcat_dev}:/opt/tomcat/apache-tomcat-9.0.85-staging/webapps"
+                    }
+                }
+
+                stage ("Deploy to Production"){
+                    steps {
+                        sh "sshpass -p 'tomcat' scp **/*.war tomcat@${params.tomcat_prod}:/opt/tomcat/apache-tomcat-9.0.85-prod/webapps"
+                    }
+                }
+            }
+        }
+    }
+}
