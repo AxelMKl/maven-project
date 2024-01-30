@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
          string(name: 'tomcat_dev', defaultValue: '192.168.50.30:8090', description: 'Staging Server')
-         string(name: 'tomcat_prod', defaultValue: '192.168.50.30', description: 'Production Server')
+         string(name: 'tomcat_prod', defaultValue: '192.168.50.30:8081', description: 'Production Server')
     }
 
     triggers {
@@ -34,9 +34,12 @@ stages{
                     }
                 }
 
-                stage ("Deploy to Production"){
+                stage ('Deploy to Production'){
                     steps {
-                        sh "cp **/target/*.war /var/lib/jenkins/workspace/deploy-to-prod/webapp"
+                        deploy adapters: [tomcat9(url: 'http://192.168.50.30:8081/',
+						credentialsId: '690a6ccd-3caa-44e4-bbc8-4e8833b7b61b')],
+						war: '**/*.war',
+						contextPath: 'webapps'
                     }
                 }
             }
