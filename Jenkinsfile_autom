@@ -27,7 +27,7 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        deploy adapters: [tomcat9(url: 'http://$(tomcat_dev)/',
+                        deploy adapters: [tomcat9(url: 'http://${params.tomcat_dev}/',
 						credentialsId: '690a6ccd-3caa-44e4-bbc8-4e8833b7b61b')],
 						war: '**/*.war',
 						contextPath: 'webapps'
