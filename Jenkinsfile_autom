@@ -33,7 +33,7 @@ stages{
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/axel.klein@scutera.com/.ssh/id_rsa **/target/*.war axel.klein@scutera.com@${params.tomcat_prod}:/var/lib/jenkins/workspace/deploy-to-prod/webapp"
+                        sh "cp **/target/*.war /var/lib/jenkins/workspace/deploy-to-prod/webapp"
                     }
                 }
             }
