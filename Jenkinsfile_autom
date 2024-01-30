@@ -30,7 +30,7 @@ stages{
                         deploy adapters: [tomcat9(url: 'http://192.168.50.30:8090/',
 						credentialsId: '690a6ccd-3caa-44e4-bbc8-4e8833b7b61b')],
 						war: '**/*.war',
-						contextPath: 'webapps'
+						contextPath: 'webapp'
                     }
                 }
 
@@ -39,7 +39,7 @@ stages{
                         deploy adapters: [tomcat9(url: 'http://192.168.50.30:8081/',
 						credentialsId: '690a6ccd-3caa-44e4-bbc8-4e8833b7b61b')],
 						war: '**/*.war',
-						contextPath: 'webapps'
+						contextPath: 'webapp'
                     }
                 }
             }
