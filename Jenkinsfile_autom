@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-         string(name: 'tomcat_dev', defaultValue: '192.168.50.30:8090', description: 'Staging Server')
-         string(name: 'tomcat_prod', defaultValue: '192.168.50.30:8081', description: 'Production Server')
+         string(name: 'tomcat_dev', defaultValue: '192.168.50.30:', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '192.168.50.30', description: 'Production Server')
     }
 
     triggers {
@@ -27,13 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "sshpass -p 'tomcat' scp  **/*.war tomcat@${params.tomcat_dev}:/opt/tomcat/apache-tomcat-9.0.85-staging/webapps"
+                        sh "scp -i /home/axel.klein@scutera.com/.ssh/id_rsa **/target/*.war axel.klein@scutera.com@${params.tomcat_dev}:/var/lib/jenkins/workspace/deploy-to-staging/webapp"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "sshpass -p 'tomcat' scp **/*.war tomcat@${params.tomcat_prod}:/opt/tomcat/apache-tomcat-9.0.85-prod/webapps"
+                        sh "scp -i /home/axel.klein@scutera.com/.ssh/id_rsa **/target/*.war axel.klein@scutera.com@${params.tomcat_prod}:/var/lib/jenkins/workspace/deploy-to-prod/webapp"
                     }
                 }
             }
