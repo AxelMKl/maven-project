@@ -28,7 +28,7 @@ stages{
                 stage ('Deploy to Staging'){
                     steps {
                         deploy adapters: [tomcat9(url: 'http://$(tomcat_dev)/',
-						cretentialsId: '690a6ccd-3caa-44e4-bbc8-4e8833b7b61b')],
+						credentialsId: '690a6ccd-3caa-44e4-bbc8-4e8833b7b61b')],
 						war: 'target/*.war',
 						contextPath: 'app'
                     }
