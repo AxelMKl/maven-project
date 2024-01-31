@@ -4,7 +4,7 @@ pipeline {
 		stage('Build'){
 			steps{
 				sh 'mvn clean package'
-				sh 'docker build . -t tomcatwebapp:1'
+				sh 'docker build . -p 192.168.50.30:9090:8080 -t tomcatwebapp:1'
 			}
 		}
 	}
