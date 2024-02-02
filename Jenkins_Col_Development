@@ -1,4 +1,7 @@
 node {
+	tools{
+		gradle '8.5'
+	}
     stage('Build'){
 		sh 'gradle wrapper'
         sh 'bash ./gradlew clean build'
