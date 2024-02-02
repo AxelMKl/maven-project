@@ -1,5 +1,18 @@
+pipeline {
+	tools {
+		gradle '8.5'
+	}
+	stages {
+		stage('Gradle version:')
+			steps {
+				sh 'gradle --version'
+			}
+		}
+	}
+}
+
 node {
-	tools{
+	tools {
 		gradle '8.5'
 	}
     stage('Build'){
