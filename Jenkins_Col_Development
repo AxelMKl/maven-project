@@ -1,7 +1,6 @@
 node {
     stage('Build'){
-        steps {
-            sh 'bash ./gradlew clean build'
+        sh 'bash ./gradlew clean build'
         }
         post {
             success {
