@@ -11,3 +11,16 @@ pipeline {
 		}
 	}
 }
+
+node {
+    stage('Build'){
+		sh 'gradle wrapper'
+        sh 'bash ./gradlew clean build'
+    }
+        post {
+            success {
+                echo 'Now Archiving...'
+                archiveArtifacts artifacts: '**/target/*.war'
+            }
+    }
+}
