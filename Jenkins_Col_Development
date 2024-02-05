@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	tools {
-		Gradle '8.5'
+		gradle '8.5'
 	}
 	stages {
 		stage('Gradle version:') {
@@ -10,17 +10,4 @@ pipeline {
 			}
 		}
 	}
-}
-
-node {
-    stage('Build'){
-		sh 'gradle wrapper'
-        sh 'bash ./gradlew clean build'
-    }
-        post {
-            success {
-                echo 'Now Archiving...'
-                archiveArtifacts artifacts: '**/target/*.war'
-            }
-    }
 }

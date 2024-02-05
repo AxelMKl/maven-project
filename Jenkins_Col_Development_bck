@@ -1,0 +1,26 @@
+pipeline {
+	agent any
+	tools {
+		gradle '8.5'
+	}
+	stages {
+		stage('Gradle version:') {
+			steps {
+				sh 'gradle --version'
+			}
+		}
+	}
+}
+
+node {
+    stage('Build'){
+		sh 'gradle wrapper'
+        sh 'bash ./gradlew clean build'
+    }
+        post {
+            success {
+                echo 'Now Archiving...'
+                archiveArtifacts artifacts: '**/target/*.war'
+            }
+    }
+}
