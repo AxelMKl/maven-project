@@ -1,3 +1,5 @@
+/* Hello all */
+
 pipeline {
     agent any
     stages{
