@@ -1,4 +1,4 @@
-/* Hello all */
+/* Hello */
 
 pipeline {
     agent any
